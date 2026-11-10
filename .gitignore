@@ -1,0 +1,11 @@
+# Escritório de agentes (arquivos locais)
+.escritorio/
+CLAUDE.local.md
+.claude/settings.local.json
+.claude/*.local.md
+.claude/*.local.json
+
+# Segredos
+.env
+.env.*
+!.env.example

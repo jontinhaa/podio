@@ -1,0 +1,18 @@
+{
+  "tipo": "mobile",
+  "revisaoAutomatica": true,
+  "limiarLinhas": 40,
+  "limiarSensivel": 1,
+  "sensiveisExtras": [],
+  "ignorarExtras": [],
+  "segundaOpiniao": "critico",
+  "criticosExtras": [],
+  "limiarCritico": 300,
+  "site": "",
+  "orcamento": {
+    "pagina": 600,
+    "js": 200,
+    "css": 90,
+    "imagem": 300
+  }
+}

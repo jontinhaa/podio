@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(escritorio:pente-fino)",
+      "Skill(escritorio:pente-fino *)",
+      "Skill(escritorio:passagem)",
+      "Skill(escritorio:passagem *)",
+      "Edit(.escritorio/**)",
+      "Bash(codex exec *)",
+      "Bash(node *olhar.mjs*)",
+      "Bash(node *portao.mjs*)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.local)",
+      "Read(.env.*.local)",
+      "Read(.env.development)",
+      "Read(.env.production)",
+      "Read(.env.staging)",
+      "Read(.env.test)",
+      "Edit(.env)",
+      "Edit(.env.local)",
+      "Edit(.env.*.local)",
+      "Edit(.env.development)",
+      "Edit(.env.production)",
+      "Edit(.env.staging)",
+      "Edit(.env.test)",
+      "Read(*.pem)",
+      "Read(*.key)",
+      "Read(id_rsa*)",
+      "Read(credentials.json)",
+      "Read(service-account*.json)"
+    ]
+  }
+}

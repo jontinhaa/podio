@@ -1,0 +1,52 @@
+/* Koraki — tokens de vídeo (GUIA.md + MOVIMENTO.md).
+   Copie para assets/ do projeto junto com assets/fonts/familjen-grotesk-*.woff2.
+   Caminhos de fonte são relativos à raiz do projeto HyperFrames (regra 10 do contrato). */
+
+@font-face {
+  font-family: "Familjen Grotesk";
+  src: url("assets/fonts/familjen-grotesk-latin.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: block;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Familjen Grotesk";
+  src: url("assets/fonts/familjen-grotesk-latin-ext.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: block;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+  /* Cores */
+  --k-noite: #0c1715;
+  --k-ambar: #f0a23b;
+  --k-ambar-queimado: #b86e10;
+  --k-igarape: #0f4d44;
+  --k-verde-agua: #7db5a2;
+  --k-creme: #f2efe7;
+
+  /* Tipografia */
+  --k-fonte: "Familjen Grotesk", sans-serif;
+  --k-fonte-mono: "JetBrains Mono", monospace;
+  --k-titulo-peso: 600;
+  --k-texto-peso: 400;
+  --k-titulo-tracking: -0.03em;
+
+  /* Corte da marca */
+  --k-corte-angulo: -24deg;
+  --k-corte-espessura: 3px; /* 4px em 9:16 */
+}
+
+/* Eases e durações não têm efeito em CSS; servem de referência para o GSAP:
+   entrada  power4.out | expo.out   0.45–0.6 s
+   saída    power3.in               ~60% da entrada
+   câmera   power2.inOut            0.8–1.6 s
+   marca    back.out(1.4)           uma vez por filme
+   corte    linha 0.35 s power4.inOut → metades 0.30 s power4.in
+   palavras defasagem 3–4 quadros (normal), 6 quadros (impacto) */

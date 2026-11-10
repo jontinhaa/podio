@@ -1,0 +1,70 @@
+{
+  "patterns": [
+    {
+      "rule_name": "segredo_em_variavel_publica",
+      "regex": "\\b(PUBLIC|NEXT_PUBLIC|VITE|EXPO_PUBLIC)_[A-Z0-9_]*(SECRET|PRIVATE|SERVICE_ROLE|ACCESS_TOKEN|PASSWORD|WEBHOOK)",
+      "exclude_paths": ["*.md"],
+      "reminder": "Variável com prefixo público (PUBLIC_, NEXT_PUBLIC_, VITE_, EXPO_PUBLIC_) vai para o navegador ou para dentro do app. Segredo (chave privada, service_role, access token, senha, segredo de webhook) fica numa variável sem prefixo público, lida só no servidor."
+    },
+    {
+      "rule_name": "access_token_mercado_pago",
+      "regex": "\\b(APP_USR|TEST)-\\d{10,}-\\d{6}-",
+      "exclude_paths": ["*.md"],
+      "reminder": "Isto parece um access token do Mercado Pago escrito no código. Ele dá acesso à conta de quem recebe: tire do código, guarde em variável de ambiente sem prefixo público e, se já foi commitado ou publicado, gere um token novo no painel do Mercado Pago."
+    },
+    {
+      "rule_name": "chave_secreta_stripe",
+      "substrings": ["sk_live_", "rk_live_", "sk_test_", "whsec_"],
+      "exclude_paths": ["*.md", "*.env.example"],
+      "reminder": "Chave secreta ou segredo de webhook do Stripe no código. Guarde em variável de ambiente lida só no servidor; se já foi commitada, gere outra no painel do Stripe."
+    },
+    {
+      "rule_name": "service_role_fora_do_servidor",
+      "substrings": ["service_role", "SERVICE_ROLE"],
+      "exclude_paths": ["**/api/**", "**/server/**", "**/functions/**", "**/supabase/**", "**/actions/**", "*.sql", "*.md", "*.env.example"],
+      "reminder": "A chave service_role do Supabase ignora o RLS e dá acesso total ao banco. Ela só pode aparecer em código que roda no servidor (rota de API, função, action) e nunca em componente, página renderizada no navegador ou app."
+    },
+    {
+      "rule_name": "cors_aberto",
+      "regex": "Access-Control-Allow-Origin['\"]?\\s*[:,]\\s*['\"]\\*|\\borigin\\s*:\\s*['\"]\\*['\"]",
+      "reminder": "CORS liberado para qualquer origem. Em rota que cria, altera, cobra ou devolve dado pessoal, libere só os domínios do próprio projeto."
+    },
+    {
+      "rule_name": "dado_sensivel_em_log",
+      "regex": "(?i)console\\.(log|info|debug|warn)\\([^\\n]*\\b(cpf|senha|password|token|cartao|card_?number|cvv|access_?token)\\b",
+      "reminder": "Log com dado sensível (CPF, senha, token ou cartão). Logs vão para o terminal, para a hospedagem e às vezes para ferramentas de terceiros: registre só o necessário, sem o valor sensível."
+    },
+    {
+      "rule_name": "hash_fraco_para_senha",
+      "regex": "(?i)\\b(md5|sha1)\\b[^\\n]{0,60}\\b(senha|password)|\\b(senha|password)\\b[^\\n]{0,60}\\b(md5|sha1)\\b",
+      "reminder": "MD5 e SHA1 não servem para senha. Use argon2id ou bcrypt, ou melhor ainda, um provedor de login pronto (Supabase Auth, Auth.js, Clerk, Firebase Auth)."
+    },
+    {
+      "rule_name": "regra_firebase_aberta",
+      "regex": "allow\\s+[a-z, ]{4,30}:\\s*if\\s+true",
+      "reminder": "Regra do Firebase liberando acesso para qualquer pessoa (if true). Restrinja por request.auth e pelo dono do documento antes de publicar."
+    },
+    {
+      "rule_name": "rls_desligado",
+      "regex": "(?i)disable\\s+row\\s+level\\s+security",
+      "paths": ["*.sql"],
+      "reminder": "RLS desligado numa tabela: com a chave anon pública, qualquer pessoa lê e escreve nela. Mantenha o RLS ligado e crie políticas com auth.uid()."
+    },
+    {
+      "rule_name": "preco_vindo_do_navegador",
+      "regex": "(?i)\\b(req\\.body|request\\.body|body|payload|input)\\s*(\\.|\\[\\s*['\"])\\s*(price|preco|valor|total|amount|unit_price|transaction_amount|frete|desconto)\\b",
+      "paths": ["**/api/**", "**/server/**", "**/functions/**", "**/actions/**", "**/webhook*", "**/checkout*", "**/pagamento*", "**/payment*"],
+      "reminder": "Valor de dinheiro lido do corpo da requisição. O navegador pode mandar qualquer número: recalcule preço, frete, desconto e total no servidor a partir do catálogo e use o que veio só para conferir."
+    },
+    {
+      "rule_name": "html_cru_astro_vue",
+      "substrings": ["set:html", "v-html"],
+      "reminder": "set:html e v-html injetam HTML sem escapar. Use só com conteúdo do próprio projeto; se vier de usuário, URL, API ou CMS, sanitize antes (por exemplo com DOMPurify)."
+    },
+    {
+      "rule_name": "dado_pessoal_no_localstorage",
+      "regex": "(?i)localStorage\\.setItem\\([^\\n]*(cpf|telefone|phone|whats|email|e-mail|endereco|address|nascimento)",
+      "reminder": "Dado pessoal guardado no localStorage fica no aparelho sem prazo e qualquer script da página consegue ler. Guarde só o necessário, por pouco tempo, e ofereça um jeito de apagar."
+    }
+  ]
+}
